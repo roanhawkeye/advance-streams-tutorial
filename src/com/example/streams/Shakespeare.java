@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
@@ -44,6 +45,14 @@ public class Shakespeare {
 			.get();
 		
 		System.out.println("Best word: " + bestWord);
+		
+		IntSummaryStatistics summaryStatistics = 
+			shakespeareWords.stream().parallel()
+				.filter(scrabbleWords::contains)
+				.mapToInt(intScore)
+				.summaryStatistics();
+		
+		System.out.println("Stats: " + summaryStatistics);
 		
 	}
 	
